@@ -6,7 +6,7 @@ operating system, based on NetBSD 1.0, based on 4.4-BSD.
 
 This repository hosts a mirror of the source code, available in the
 `upstream` branch, retrieved from the official Git mirror of the CVS
-repository, tracking `trunk`.  There are several guides for developers
-and users, the formatted guide is available at:
+repository, tracking `master`.  There are several guides for
+developers and users, the formatted guide is available at:
 
 	https://www.openbsd.org/faq/
