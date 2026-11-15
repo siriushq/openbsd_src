@@ -1,0 +1,32 @@
+on:
+  # twice a day at 6am and 6pm UTC
+  schedule:
+    - cron: "0 6,18 * * *"
+  # manual dispatch
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: checkout master
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: configure identity, git remote add, git fetch, git checkout
+        run: |
+          git config --global user.name "siriushq-aggregate[bot]"
+          git config --global user.email "siriushq-aggregate[bot]@users.noreply.github.com"
+
+          git remote add upstream https://github.com/openbsd/src.git
+          git fetch upstream
+          git checkout -B upstream upstream/trunk
+          
+      - name: force push to `upstream`
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin HEAD:upstream --force
